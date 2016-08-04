@@ -23,8 +23,6 @@ except:
 	pass
 
 
-
-"""if (photoDirs==None and photoFile==None):"""
 if (exitStatus==-1):
 	photodir_table=Table('photoDirs',__init__.meta, 
 			Column('id', String(10), primary_key=True), 
@@ -50,7 +48,7 @@ class photoFile(object):
 		self.filename=filename
 
 
-"""if (photoDirs==None and photoFile==None):"""
+
 if (exitStatus==-1):
 	mapper(photoDir,photodir_table)
 	mapper(photoFile,photofile_table)
@@ -58,13 +56,6 @@ else:
 	mapper(photoDir,photoDirs_table)
 	mapper(photoFile,photoFile_table)
 
-"""if __name__== '__main__':
-	
-	
-	dir1=photoDir('1','/home/michael/HardDisk_HP/products/photoes')
-	dir2=photoDir('2','/home/michael/HardDisk_HP/products/photoes/DCIM')
-	__init__.dbsession.add(dir1)
-	__init__.dbsession.add(dir2)
-	__init__.dbsession.commit()"""
+
 
 
