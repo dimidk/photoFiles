@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
-"""'cause a python script gonna be executed"""
+
 
 from sqlalchemy import create_engine,MetaData
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -43,7 +43,7 @@ def createDB():
 		print("User doesn't have privileges")
 	
 
-"""engine=create_engine('mysql+mysqlconnector://mike:mike@localhost/PHOTO_DB',encoding='utf8',echo=True)"""
+
 exitDict=connectDB()
 exitStatus=exitDict['exitcode']
 
