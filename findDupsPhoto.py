@@ -10,10 +10,7 @@ from dbPhoto import photoDir,photoFile
 """import dbPhoto"""
 from sqlalchemy.orm.exc import *
 
-"""τώρα πρέπει να δω τα ελληνικά στη βάση και πώς θα κάνω truncate με foreign key constraint"""
-"""πρέπει να ελέγξω να μην προσθέτει τις ίδιες φωτογραφίες"""
 
-"""create hash for file"""
 def hashValueToFile(fpath):
 
 	try:
@@ -29,7 +26,6 @@ def hashValueToFile(fpath):
 			break
 		sha.update(line)
 
-	"""hashValue=sha.digest()"""
 	hashValue=sha.hexdigest()
 	return hashValue
 
@@ -49,7 +45,6 @@ def findDuplsFiles(rootDir):
 			fpath=os.path.join(dirpath,filename)
 			
 			hashFile=hashValueToFile(fpath)
-			"""print(fpath,' ',hashFile)"""			
 
 			if hashFile not in dupsFile:
 				dupsFile[hashFile]=[fpath]
@@ -58,7 +53,6 @@ def findDuplsFiles(rootDir):
 	fd.close()
 	return dupsFile
 
-"""import the database with files and dictionaries"""
 def importDatabase(photofile):
 	
 	try:
@@ -76,7 +70,7 @@ def importDatabase(photofile):
 			numrows_photoDirs+=1
 
 		
-		"""check if file table is empty"""
+		
 		numrows_photoFile=__init__.dbsession.query(func.count(photoFile.id)).scalar()
 		if numrows_photoFile==0:
 			numrows_photoFile=1
@@ -90,14 +84,22 @@ def importDatabase(photofile):
 			if select_path==None:
 				insert_dir=photoDir(id=str(numrows_photoDirs),pathname=pathName)
 				__init__.dbsession.add(insert_dir)
-			
-			num_id_path=str(numrows_photoDirs)
+				num_id_path=str(numrows_photoDirs)
+			else:
+				num_id_path=select_path.id
 		else:
 			nameFile=l.strip()
 			
 			insert_file=photoFile(id=numrows_photoFile,id_path=num_id_path,filename=nameFile)
-			"""insert_file=photoFile(id=numrows_photoFile,id_path=str(numrows_photoDirs),filename=nameFile)"""
-			__init__.dbsession.add(insert_file)	
+			
+			select_file=__init__.dbsession.query(photoFile.id_path,photoFile.filename).filter(photoFile.filename==nameFile).all()
+			if select_file is None:
+				
+				__init__.dbsession.add(insert_file)	
+			else:
+				for id_path,filename in select_path:
+					if (id_path==num_id_path and filename==nameFile):
+						break
 		
 		__init__.dbsession.commit()
 		
