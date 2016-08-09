@@ -9,7 +9,7 @@ import __init__
 from dbPhoto import photoDir,photoFile
 """import dbPhoto"""
 from sqlalchemy.orm.exc import *
-import passwd.py
+import passwd
 
 
 def hashValueToFile(fpath):
