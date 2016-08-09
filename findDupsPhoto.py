@@ -9,6 +9,7 @@ import __init__
 from dbPhoto import photoDir,photoFile
 """import dbPhoto"""
 from sqlalchemy.orm.exc import *
+import passwd.py
 
 
 def hashValueToFile(fpath):
@@ -31,7 +32,7 @@ def hashValueToFile(fpath):
 
 def findDuplsFiles(rootDir):
 
-	fd=codecs.open(__init__.photoFile,"w","utf-8")
+	fd=codecs.open(passwd.photoFile,"w","utf-8")
 	dupsFile={}
 	
 	for dirpath,dirnames,filenames in os.walk(rootDir,topdown=True):
@@ -107,9 +108,9 @@ def importDatabase(photofile):
 
 if __name__== '__main__':
 
-	dupsFileDict=findDuplsFiles(__init__.rootDir)
+	dupsFileDict=findDuplsFiles(passwd.rootDir)
 
-	importDatabase(__init__.photoFile)
+	importDatabase(passwd.photoFile)
 
 	fd=codecs.open("dupsFileDict","w","utf-8")
 	
