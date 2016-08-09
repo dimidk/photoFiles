@@ -5,15 +5,13 @@
 from sqlalchemy import create_engine,MetaData
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.exc import *
+import passwd
 
-newDB='photoDB'
-rootDir = "/home/michael/HardDisk_HP/products/PHOTOES"
-photoFile = "pathWalk"
 
-dbDict={'user':'mike','password':'mike','host':'localhost'}
+dbDict={'user':passwd.userName,'password':passwd.password,'host':passwd.hostName}
 dbUrlFormat='mysql+mysqlconnector://{user}:{password}@{host}/{database}'
 dbUrlDefault=(dbUrlFormat.format(database='mysql',**dbDict))
-dbUrlNew=(dbUrlFormat.format(database=newDB,**dbDict))
+dbUrlNew=(dbUrlFormat.format(database=passwd.newDB,**dbDict))
 
 def connectDB():
 	exitdb={}
@@ -35,7 +33,7 @@ def createDB():
 		engine=create_engine(dbUrlDefault,encoding='utf8',echo=True)
 		conn=engine.connect() 
 		conn.execute("COMMIT")
-		conn.execute("CREATE DATABASE %s" % newDB)
+		conn.execute("CREATE DATABASE %s" % passwd.newDB)
 		conn.execute("COMMIT")
 		conn.close()
 		
